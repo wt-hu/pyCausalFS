@@ -8,7 +8,8 @@ The pyCausalFS library implements 30 representative causality-based feature sele
 
 1）	Constraint-based MB learning methods:
 
-	GSMB, IAMB, Inter-IAMB, Fast-IAMB, inter-IAMBnPC, LRH, BAMB, FBEDk, MMMB, PCMB, HITON-MB, Semi-HITON-MB, IPCMB, STMB, MBOR
+	GSMB, IAMB, Inter-IAMB, Fast-IAMB, inter-IAMBnPC, LRH, BAMB, FBEDk, MMMB, PCMB, HITON-MB, Semi-HITON-MB, IPCMB, 
+	STMB, MBOR
 
 2）	Multiple MB learning methods:
 
