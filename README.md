@@ -2,7 +2,7 @@
 
 <h2>Overview</h2>
 The pyCausalFS library provides access to a wide range of well-established and state-of-the-art causality-based feature selection approaches. The library is designed to facilitate the development of new algorithms in this research area and make it easier to compare new methods and existing ones available.   
-
+>
 
 The pyCausalFS library implements 30 representative causality-based feature selection methods. Specifically, it consists of 25 methods using conditional independence tests (16 single MB learning algorithms, 3 multiple MB learning algorithms, and 6 PC learning algorithms), and 5 score-based approaches.   
 
@@ -29,7 +29,7 @@ The pyCausalFS library implements 30 representative causality-based feature sele
 
 
 Furthermore, using the pyCausalFS library, users can easily generate different local structure learning methods and local-to-global structure learning methods, which includes 3 local BN structure learning algorithms and one local-to global BN learning algorithm.  
-
+>
 
 6）	local BN structure learning algorithms:
 
@@ -38,6 +38,6 @@ Furthermore, using the pyCausalFS library, users can easily generate different l
 7）	local-to global BN learning algorithm:
 
 	MMHC
-
+>
 
 All implementation details please read the manual documentation.
