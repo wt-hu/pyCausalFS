@@ -17,6 +17,7 @@ KIAMB, TIE*(TIE and TIE_p)
 3）	Constraint-based PC learning methods:
 
 PC-simple, MBtoPC, HITON-PC, Semi-HITON-PC, GetPC, MMPC
+
 4）	score-based MB learning methods:
 
 SLL, S^2TMB, S^2TMB_p
