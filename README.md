@@ -8,23 +8,23 @@ The pyCausalFS library implements 30 representative causality-based feature sele
 
 1）	Constraint-based MB learning methods:
 
-GSMB, IAMB, Inter-IAMB, Fast-IAMB, inter-IAMBnPC, LRH, BAMB, FBEDk, MMMB, PCMB, HITON-MB, Semi-HITON-MB, IPCMB, STMB, MBOR
+	GSMB, IAMB, Inter-IAMB, Fast-IAMB, inter-IAMBnPC, LRH, BAMB, FBEDk, MMMB, PCMB, HITON-MB, Semi-HITON-MB, IPCMB, STMB, MBOR
 
 2）	Multiple MB learning methods:
 
-KIAMB, TIE*(TIE and TIE_p)
+	KIAMB, TIE*(TIE and TIE_p)
 
 3）	Constraint-based PC learning methods:
 
-PC-simple, MBtoPC, HITON-PC, Semi-HITON-PC, GetPC, MMPC
+	PC-simple, MBtoPC, HITON-PC, Semi-HITON-PC, GetPC, MMPC
 
 4）	score-based MB learning methods:
 
-SLL, S^2TMB, S^2TMB_p
+	SLL, S^2TMB, S^2TMB_p
 
 5）	score-based PC learning methods:
 
-SLL-PC, S^2TMB-PC
+	SLL-PC, S^2TMB-PC
 
 
 Furthermore, using the pyCausalFS library, users can easily generate different local structure learning methods and local-to-global structure learning methods, which includes 3 local BN structure learning algorithms and one local-to global BN learning algorithm.
@@ -32,11 +32,11 @@ Furthermore, using the pyCausalFS library, users can easily generate different l
 
 6）	local BN structure learning algorithms:
 
-PCD-by-PCD, MB-by-MB, CMB
+	PCD-by-PCD, MB-by-MB, CMB
 
 7）	local-to global BN learning algorithm:
 
-MMHC
+	MMHC
 
 
 All implementation details please read the manual documentation.
