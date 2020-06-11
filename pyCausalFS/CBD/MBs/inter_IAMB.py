@@ -74,7 +74,7 @@ def inter_IAMB(data, target, alaph, is_discrete=True):
                 # if any changes,circulate should be contine
                 # circulateFlag = True
 
-    return MB, ci_number
+    return list(set(MB)), ci_number
 
 
 # data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s500_v1.csv")

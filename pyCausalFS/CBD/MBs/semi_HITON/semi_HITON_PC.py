@@ -67,7 +67,7 @@ def semi_HITON_PC(data, target, alaph,is_disrete = True):
                         break
                 if flag:
                     break
-    return current_pc, sep,ci_number
+    return list(set(current_pc)), sep,ci_number
 
 
 # data = pd.read_csv("F:\cai_algorithm\data\Child_s500_v1.csv")

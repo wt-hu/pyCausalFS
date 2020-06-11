@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: smop
+Version: 0.41
+Summary: Matlab to Python converter
+Home-page: https://github.com/victorlei/smop
+Author: Victor Leikehman
+Author-email: victorlei@gmail.com
+License: MIT
+Download-URL: https://github.com/victorlei/smop/archive/master.zip
+Description: UNKNOWN
+Keywords: convert translate matlab octave python
+Platform: UNKNOWN

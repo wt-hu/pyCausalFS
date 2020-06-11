@@ -28,11 +28,11 @@ def PCMB(data, target, alaph, is_discrete=True):
             conditionSet.append(str(x))
             conditionSet = list(set(conditionSet))
             ci_number += 1
-            pval, dep = cond_indep_test(data, target, y, conditionSet, is_discrete)
+            pval, dep = cond_indep_test(data, target, y, conditionSet, is_discrete, True)
             if pval <= alaph:
                 MB.append(y)
                 break
-    return MB, ci_number
+    return list(set(MB)), ci_number
 
 
 # import pandas as pd

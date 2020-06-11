@@ -46,7 +46,7 @@ def GSMB(data, target, alaph, is_discrete=True):
                 circulateFlag = True
                 break
 
-    return CMB, ci_number
+    return list(set(CMB)), ci_number
 
 # data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s500_v2.csv")
 # print("the file read")

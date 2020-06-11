@@ -27,6 +27,9 @@ def CausalSearch(
             if i != j:
                 x = PCT[i]
                 y = PCT[j]
+                if x in Z or y in Z:
+                    continue
+                # print("X is: ",x," y is: ",y," Z is: ", Z)
                 pval, _ = cond_indep_test(Data, x, y, Z, is_discrete)
                 condition_vars = [str(i)for i in Z]
                 condition_vars.append(str(T))

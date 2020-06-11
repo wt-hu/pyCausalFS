@@ -19,7 +19,7 @@ def RecognizePC(data, target, ADJT, alaph, is_discrete=True):
             SSubset = subsets(ADJT_X, cutSetSize)
             for S in SSubset:
                 ci_number += 1
-                pval_gp, dep_gp = cond_indep_test(data, target, x, S, is_discrete)
+                pval_gp, dep_gp = cond_indep_test(data, target, x, S, is_discrete, True)
                 if pval_gp > alaph:
                     NonPC.append(x)
                     sepset[x] = [str(i) for i in S]

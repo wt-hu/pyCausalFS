@@ -63,7 +63,7 @@ def evaluation(method,
     commonDivisor = length_target_list * filenumber
 
 
-    return num_re / commonDivisor, num_miss / commonDivisor, num_extra / commonDivisor
+    return num_undirect/commonDivisor, num_re / commonDivisor, num_miss / commonDivisor, num_extra / commonDivisor
 
 
 # test main
@@ -95,15 +95,16 @@ if __name__ == '__main__':
     elif isdiscrete == "0":
         isdiscrete = False
     print("\n")
-    num_re, num_miss, num_extra = evaluation(
+    num_undirect,num_re, num_miss, num_extra = evaluation(
         method, data_path, num_para, list_target, real_graph_path, isdiscrete, file_number, alpha)
-
+    print("undirect is: " + str(num_undirect))
     print("reverse is: " + str(num_re))
     print("miss is: " + str(num_miss))
     print("extra is: " + str(num_extra))
 
     with open(r".\output\outputLSL.txt", "w") as file:
         file.write(str(method) + ": \n")
+        file.write("undirect is: " + str(num_undirect) + "\n")
         file.write("reverse is: " + str(num_re) + "\n")
         file.write("miss is: " + str(num_miss) + "\n")
         file.write("extra is: " + str(num_extra) + "\n")

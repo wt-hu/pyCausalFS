@@ -41,7 +41,7 @@ def KIAMB(data,target, alaph, k, is_discrete=True):
         if pval > alaph:
             MB.remove(x)
             
-    return MB, ci_number
+    return list(set(MB)), ci_number
 
 # data = pd.read_csv("F:\cai_algorithm\data\Child_s500_v1.csv")
 # MB,num = KIAMB(data,1,0.01,0.8)

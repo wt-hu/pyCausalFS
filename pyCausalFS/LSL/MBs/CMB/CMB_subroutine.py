@@ -26,10 +26,9 @@ def CMB_subroutine(Data, T, alaph, IDT, already_calculated_MB, all_MB, is_discre
         if already_calculated_MB[x] == 1:
             all_MB[x], _ = HITON_MB(Data, x, alaph, is_discrete)
             already_calculated_MB[x] = 0
+        Z = []
         if x in all_MB.keys():
             Z = [i for i in all_MB[x] if i != T and i != y]
-        else:
-            Z = []
         IDT, idT3, idT3_count, idT4, idT4_count = CausalSearch(
             Data, T, PCT, Z, IDT, alaph, idT3, idT3_count, idT4, idT4_count, is_discrete)
         if 4 not in IDT:

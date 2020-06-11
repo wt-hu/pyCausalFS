@@ -25,13 +25,13 @@ def HITON_MB(data, target, alaph, is_discrete=True):
                 conditions_Set.append(str(x))
                 conditions_Set = list(set(conditions_Set))
                 ci_number += 1
-                pval, dep = cond_indep_test(data, target, y, conditions_Set, is_discrete)
+                pval, dep = cond_indep_test(data, target, y, conditions_Set, is_discrete, True)
                 if pval <= alaph:
                     # print("append is: " + str(y))
                     currentMB.append(y)
                     break
 
-    return currentMB, ci_number
+    return list(set(currentMB)), ci_number
 
 
 # data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s500_v1.csv")

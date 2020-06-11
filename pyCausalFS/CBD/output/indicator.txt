@@ -1,6 +1,0 @@
-IAMB: F1 is: 0.89 
-Precision is: 0.88
-Recall is: 0.94
-Distance is: 0.16
-ci_number is: 97.85
-time is:139.59

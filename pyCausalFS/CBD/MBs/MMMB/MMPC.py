@@ -101,7 +101,7 @@ def MMPC(data, target, alpha, is_discrete):
                     breakFlag = True
                     break
 
-    return CPC, sepset, ci_number
+    return list(set(CPC)), sepset, ci_number
 
 
 

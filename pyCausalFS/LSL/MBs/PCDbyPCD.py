@@ -98,7 +98,7 @@ def PCDbyPCD(data, target, alaph, is_discrete=True):
             if np.all(pDAG[:, target] != 1) and np.all(pDAG[target, :] != 1):
                 # print("break")
                 break
-    print(pDAG)
+    # print(pDAG)
     for i in range(kVar):
         if pDAG[i, target] == -1:
             parents.append(i)

@@ -18,7 +18,7 @@ def semi_HITON_MB(data,target,alaph,is_discrete = True):
                     # print("append y is " + str(y))
                     MB.append(y)
                     break
-    return MB,ci_number
+    return list(set(MB)), ci_number
 
 # data = pd.read_csv("F:\cai_algorithm\data\Child_s500_v1.csv")
 # MB = semi_HITON_MB(data,1,0.01)

@@ -39,7 +39,7 @@ def getPCD(data, target, alaph, is_discrete):
                 SSubsets = subsets(PCD, j)
                 for S in SSubsets:
                     ci_number += 1
-                    pval_gp, dep_gp = cond_indep_test(data, target, vari, S, is_discrete)
+                    pval_gp, dep_gp = cond_indep_test(data, target, vari, S, is_discrete, True)
 
                     if pval_gp > alaph:
                         vari_min = -1
@@ -82,7 +82,7 @@ def getPCD(data, target, alaph, is_discrete):
                     SSubsets = subsets(conditionSetALL, j)
                     for S in SSubsets:
                         ci_number += 1
-                        pval_sp, dep_sp = cond_indep_test(data, target, x, S, is_discrete)
+                        pval_sp, dep_sp = cond_indep_test(data, target, x, S, is_discrete, True)
 
                         if pval_sp > alaph:
 
@@ -100,7 +100,7 @@ def getPCD(data, target, alaph, is_discrete):
                     break
         else:
             break
-    return PCD, sepset, ci_number
+    return list(set(PCD)), sepset, ci_number
 
 
 def getPC(data, target, alaph, is_discrete):
@@ -115,4 +115,4 @@ def getPC(data, target, alaph, is_discrete):
         if target in variSet:
             PC.append(x)
 
-    return PC, sepset, ci_number
+    return list(set(PC)), sepset, ci_number

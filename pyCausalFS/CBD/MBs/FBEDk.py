@@ -59,7 +59,7 @@ def FBED(data, target, k, alaph, is_discrete=True):
         if pval > alaph:
             S.remove(x)
 
-    return S, ci_number
+    return list(set(S)), ci_number
 
 
 # import pandas as pd

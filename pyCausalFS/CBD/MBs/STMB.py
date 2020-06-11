@@ -59,17 +59,12 @@ def STMB(data, target, alaph, is_discrete=True):
                     break
                 else:
                     spouse[y].append(x)
-                    # print("x append is: " + str(x) + " ,spouse[" + str(y) + "] has: " + str(spouse[y]))
 
     PCT = [i for i in PCT if i not in remove]
-    # print("-PCT has: " + str(PCT))
-    # print(len(spouse))
-    # print("spouse is:" + str(spouse))
+
     for y in range(len(spouse)):
-        # print("y is: " + str(y))
         if spouse[y] != []:
             spouseY_temp = spouse[y].copy()
-            # print("spouse[" +str(y)+ "] has: " + str(spouse[y]))
             for x in spouseY_temp:
                 testSet = [i for i in range(kVar) if i in PCT or i in spouse[y]]
                 testSet = list(set(testSet))
@@ -78,6 +73,7 @@ def STMB(data, target, alaph, is_discrete=True):
                     testSet.remove(x)
 
                 ci_number += 1
+                print("target is: ", target, " x is: " , x, "testSet is: ", testSet)
                 pval_xt_testset, _ = cond_indep_test(data, target, x, testSet, is_discrete)
                 if pval_xt_testset > alaph:
                     # print("spouse[y] had: " + str(spouse[y]))

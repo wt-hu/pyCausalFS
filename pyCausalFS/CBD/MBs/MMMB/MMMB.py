@@ -32,7 +32,7 @@ def MMMB(data, target, alaph, is_discrete=True):
                 if pval <= alaph:
                     MB.append(y)
                     break
-    return MB, ci_number
+    return list(set(MB)), ci_number
 
 # import pandas as pd
 # data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s500_v3.csv")

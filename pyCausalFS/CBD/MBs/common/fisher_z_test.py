@@ -66,7 +66,10 @@ def cond_indep_fisher_z(data, var1, var2, cond=[], alpha=0.05):
     """
 
     N, k_var = np.shape(data)
-    list_new = [var1, var2] + list(cond)
+    list_z = [var1, var2] + list(cond)
+    list_new = []
+    for a in list_z:
+        list_new.append(int(a))
     data_array = np.array(data)
     array_new = np.transpose(np.matrix(data_array[:, list_new]))
     cov_array = np.cov(array_new)

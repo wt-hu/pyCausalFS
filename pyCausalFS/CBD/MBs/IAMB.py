@@ -10,7 +10,7 @@ from CBD.MBs.common.condition_independence_test import cond_indep_test
 
 
 def IAMB(data, target, alaph, is_discrete=True):
-    number, kVar=  np.shape(data)
+    number, kVar = np.shape(data)
     CMB = []
     ci_number = 0
     # forward circulate phase
@@ -26,6 +26,7 @@ def IAMB(data, target, alaph, is_discrete=True):
         for x in variables:
             ci_number += 1
             pval, dep = cond_indep_test(data, target, x, CMB, is_discrete)
+            # print("target is:",target,",x is: ", x," CMB is: ", CMB," ,pval is: ",pval," ,dep is: ", dep)
 
             # chose maxsize of f(X:T|CMB)
             if pval <= alaph:
@@ -40,18 +41,18 @@ def IAMB(data, target, alaph, is_discrete=True):
             circulate_Flag = True
 
     # backward circulate phase
-    # print(CMB)
     CMB_temp = CMB.copy()
     for x in CMB_temp:
         # exclude variable which need test p-value
         condition_Variables=[i for i in CMB if i != x]
         ci_number += 1
         pval, dep = cond_indep_test(data,target, x, condition_Variables, is_discrete)
-        if pval > alaph :
+        # print("target is:", target, ",x is: ", x, " condition_Variables is: ", condition_Variables, " ,pval is: ", pval, " ,dep is: ", dep)
+        if pval > alaph:
             # print("removed variables is: " + str(x))
             CMB.remove(x)
 
-    return CMB, ci_number
+    return list(set(CMB)), ci_number
 
 
 
@@ -84,3 +85,13 @@ def IAMB(data, target, alaph, is_discrete=True):
 # Distance is: 0.16
 # ci_number is: 97.85
 # time is: 88.89
+
+# import  pandas as pd
+# data = pd.read_csv("../data/Alarm1_s1000_v1.csv")
+# print("the file read")
+#
+# target = 2
+# alaph = 0.01
+#
+# MBs=IAMB(data, target, alaph, is_discrete=True)
+# print("MBs is: "+str(MBs))

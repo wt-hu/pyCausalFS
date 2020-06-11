@@ -33,13 +33,13 @@ def IPC_MB(data, target, alaph, is_discrete=True):
                 conditionsSet.append(str(x))
                 conditionsSet = list(set(conditionsSet))
                 ci_number += 1
-                pval, dep = cond_indep_test(data,target,y,conditionsSet, is_discrete)
+                pval, dep = cond_indep_test(data,target,y,conditionsSet, is_discrete, True)
                 if pval <= alaph:
                     # print("append is:" + str(y)+" conditinSet: " + str(conditionsSet))
                     MB.append(y)
 
 
-    return MB, ci_number
+    return list(set(MB)), ci_number
 
 
 # data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s500_v3.csv")

@@ -24,9 +24,9 @@ def HITON_PC(data, target, alaph, is_discrete=True):
     candidate_Vars = [i for i in range(kVar) if i != target]
     for x in candidate_Vars:
         ci_number += 1
-        pval_gp, dep_gp = cond_indep_test(data, target, x, [], is_discrete)
+        pval_gp, dep_gp = cond_indep_test(data, target, x, [], is_discrete, True)
         if pval_gp <= alaph:
-            variDepSet.append([x,dep_gp])
+            variDepSet.append([x, dep_gp])
 
 
     # sorted by dep from max to min
@@ -63,7 +63,7 @@ def HITON_PC(data, target, alaph, is_discrete=True):
                 for s in SS:
                     ci_number += 1
                     conditions_test_set = [i for i in s]
-                    pval_rm, dep_rm = cond_indep_test(data, target, y, conditions_test_set, is_discrete)
+                    pval_rm, dep_rm = cond_indep_test(data, target, y, conditions_test_set, is_discrete, True)
                     if pval_rm > alaph:
                         sepset[y] = [i for i in conditions_test_set]
                         # if new x add will be removed ,test will not be continue
@@ -78,7 +78,7 @@ def HITON_PC(data, target, alaph, is_discrete=True):
             if breakFlagTwo:
                 break
 
-    return PC, sepset, ci_number
+    return list(set(PC)), sepset, ci_number
 
 
 

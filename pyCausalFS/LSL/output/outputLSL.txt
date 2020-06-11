@@ -1,2 +1,0 @@
-3 parents: [1] ,children: [14] ,undirected: [].
-the running time is: 1592.359375

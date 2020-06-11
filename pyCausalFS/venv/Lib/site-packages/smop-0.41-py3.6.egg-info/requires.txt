@@ -1,0 +1,4 @@
+ply
+numpy
+scipy
+networkx
