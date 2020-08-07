@@ -2,18 +2,18 @@
 # /usr/bin/env python
 """
 date: 2019/7/21 9:42
-desc: 
+desc:
 """
 from CBD.MBs.common.condition_independence_test import cond_indep_test
 from CBD.MBs.IPCMB.RecognizePC import RecognizePC
 import numpy as np
 
 
-
 def IPC_MB(data, target, alaph, is_discrete=True):
     number, kVar = np.shape(data)
     CanADJT = [i for i in range(kVar) if i != target]
-    PC, sepset, ci_number = RecognizePC(data, target, CanADJT, alaph, is_discrete)
+    PC, sepset, ci_number = RecognizePC(
+        data, target, CanADJT, alaph, is_discrete)
     # print("pc is: " + str(PC))
     # print("sepset is: " + str(sepset))
     MB = PC.copy()
@@ -28,16 +28,15 @@ def IPC_MB(data, target, alaph, is_discrete=True):
             continue
         for y in CanSP:
             if y != target and y not in MB:
-                conditionsSet = [str(i) for i in sepset[y]]
-
-                conditionsSet.append(str(x))
+                conditionsSet = [i for i in sepset[y]]
+                conditionsSet.append(x)
                 conditionsSet = list(set(conditionsSet))
                 ci_number += 1
-                pval, dep = cond_indep_test(data,target,y,conditionsSet, is_discrete, True)
+                pval, dep = cond_indep_test(
+                    data, target, y, conditionsSet, is_discrete)
                 if pval <= alaph:
                     # print("append is:" + str(y)+" conditinSet: " + str(conditionsSet))
                     MB.append(y)
-
 
     return list(set(MB)), ci_number
 
@@ -52,14 +51,13 @@ def IPC_MB(data, target, alaph, is_discrete=True):
 # print("MBs is: "+str(MBs))
 
 
-
 # F1 is: 0.7997213203463205
 # Precision is: 0.893875
 # Recall is: 0.7637083333333331
 # time is: 26.190546875
 
 
-#5000
+# 5000
 
 # F1 is: 0.96
 # Precision is: 0.94

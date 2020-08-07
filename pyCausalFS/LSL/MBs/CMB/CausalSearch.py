@@ -31,9 +31,9 @@ def CausalSearch(
                     continue
                 # print("X is: ",x," y is: ",y," Z is: ", Z)
                 pval, _ = cond_indep_test(Data, x, y, Z, is_discrete)
-                condition_vars = [str(i)for i in Z]
-                condition_vars.append(str(T))
-                condition_vars = list(set(condition_vars))
+                condition_vars = [i for i in Z]
+                condition_vars.append(T)
+                condition_vars = sorted(set(condition_vars))
                 pval2, _ = cond_indep_test(Data, x, y, condition_vars, is_discrete)
                 if pval > alaph and pval2 <= alaph:
                     IDT[T, x] = 1

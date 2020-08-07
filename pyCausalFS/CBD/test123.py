@@ -46,15 +46,16 @@ def evaluation(
     use_time = 0
     ci_number = 0
     realmb, realpc = realMB(all_number_Para, real_graph_path)
+    print("realmb is: ", realmb)
     length_targets = len(target_list)
     for m in range(filenumber):
         completePath = path + str(m + 1) + ".csv"
         data = pd.read_csv(completePath)
         number, kVar = np.shape(data)
         ResMB = [[]] * length_targets
-        # print("\ndata set is: " + str(m+1) + ".csv")
+        print("\ndata set is: " + str(m+1) + ".csv")
         for i, target in enumerate(target_list):
-            # print("target is: " + str(target))
+            print("target is: " + str(target))
             if method == "MMMB":
                 start_time = time.process_time()
                 MB, ci_num = MMMB(data, target, alaph, is_discrete)
@@ -62,6 +63,7 @@ def evaluation(
             elif method == "IAMB":
                 start_time = time.process_time()
                 MB, ci_num = IAMB(data, target, alaph, is_discrete)
+
                 end_time = time.process_time()
             elif method == "KIAMB":
                 start_time = time.process_time()
@@ -125,7 +127,7 @@ def evaluation(
                 end_time = time.process_time()
             else:
                 raise Exception("method input error!")
-
+            print("MB is: ", MB)
             use_time += (end_time - start_time)
             ResMB[i] = MB
             ci_number += ci_num
@@ -177,58 +179,40 @@ def evaluation(
 
 # test main
 if __name__ == '__main__':
-    method = input("algorithm name: ")
-    K_flag = False
-    if method == "KIAMB":
-        K = float(input("k: "))
+    method_list = ["IAMB", "inter_IAMB", "HITON_MB", "MMMB", "FBEDk"]
+    data_path = "./data/child_data/Child_s500_v"
+    alpha = 0.01
+    isdiscrete = True
+    real_graph_path = "./data/Child_graph.txt"
+    for method in method_list:
+        # method = "IAMB"
+        print(str(method))
         K_flag = True
-    elif method == "FBEDk":
-        K = int(input("k: "))
-        K_flag = True
-
-    real_graph_path = input("real graph path: ")
-    if real_graph_path == "default":
-        real_graph_path = "./data/child_graph.txt"
-
-    data_path = input("data: ")
-    if data_path == "default":
-        data_path = "./data/Child_s5000_v"
-    file_number = int(input("file number: "))
-    _, num_para = np.shape(pd.read_csv(data_path + '1.csv'))
-
-    list_t = input("target variable index: ").split(",")
-    list_target = []
-    if list_t[0] == "all":
+        data = pd.read_csv('./data/Child_s500_v1.csv')
+        _, num_para = np.shape(data)
+        print(num_para)
         list_target = [i for i in range(num_para)]
-    else:
-        for i in list_t:
-            list_target.append(int(i))
+        file_number = 10
+        K = 5
+        if K_flag:
+            F1, Precision, Recall, Distance, ci_number, timeval = evaluation(
+                method, data_path, num_para, list_target, real_graph_path, isdiscrete, file_number, alpha, K)
+        else:
+            F1, Precision, Recall, Distance, ci_number, timeval = evaluation(
+                method, data_path, num_para, list_target, real_graph_path, isdiscrete, file_number, alpha)
 
-    alpha = float(input("alpha: "))
-    isdiscrete = input("is_discrete: ")
-    if isdiscrete == "1":
-        isdiscrete = True
-    elif isdiscrete == "0":
-        isdiscrete = False
-    print("\n")
-    if K_flag:
-        F1, Precision, Recall, Distance, ci_number, time = evaluation(
-            method, data_path, num_para, list_target, real_graph_path, isdiscrete, file_number, alpha, K)
-    else:
-        F1, Precision, Recall, Distance, ci_number, time = evaluation(
-            method, data_path, num_para, list_target, real_graph_path, isdiscrete, file_number, alpha)
+        print("F1 is: " + str("%.2f " % F1))
+        print("Precision is: " + str("%.2f" % Precision))
+        print("Recall is: " + str("%.2f" % Recall))
+        print("Distance is: " + str("%.2f" % Distance))
+        print("ci_number is: " + str("%.2f" % ci_number))
+        print("Running time is: " + str("%.2f" % timeval))
+        with open(r".\output\indicator.txt", "a+") as file:
+            file.write(str(method) + ": \n")
+            file.write("F1 is: " + str("%.2f " % F1) + "\n")
+            file.write("Precision is: " + str("%.2f" % Precision) + "\n")
+            file.write("Recall is: " + str("%.2f" % Recall) + "\n")
+            file.write("Distance is: " + str("%.2f" % Distance) + "\n")
+            file.write("ci_number is: " + str("%.2f" % ci_number) + "\n")
+            file.write("Running time is:" + str("%.2f" % timeval) + "\n")
 
-    print("F1 is: " + str("%.2f " % F1))
-    print("Precision is: " + str("%.2f" % Precision))
-    print("Recall is: " + str("%.2f" % Recall))
-    print("Distance is: " + str("%.2f" % Distance))
-    print("ci_number is: " + str("%.2f" % ci_number))
-    print("Running time is: " + str("%.2f" % time))
-    with open(r".\output\indicator.txt", "w") as file:
-        file.write(str(method) + ": ")
-        file.write("F1 is: " + str("%.2f " % F1) + "\n")
-        file.write("Precision is: " + str("%.2f" % Precision) + "\n")
-        file.write("Recall is: " + str("%.2f" % Recall) + "\n")
-        file.write("Distance is: " + str("%.2f" % Distance) + "\n")
-        file.write("ci_number is: " + str("%.2f" % ci_number) + "\n")
-        file.write("Running time is:" + str("%.2f" % time) + "\n")

@@ -9,11 +9,11 @@ import numpy as np
 from CBD.MBs.common.condition_independence_test import cond_indep_test
 from CBD.MBs.common.subsets import subsets
 
+
 def IAMBnPC(data, target, alaph, is_discrete=True):
     CMB = []
     ci_number = 0
     number, kVar = np.shape(data)
-
 
     while True:
         variDepSet = []
@@ -25,16 +25,13 @@ def IAMBnPC(data, target, alaph, is_discrete=True):
             # print("pval: " + str(pval))
             if pval <= alaph:
                 variDepSet.append([x, dep])
-        variDepSet = sorted(variDepSet, key= lambda x:x[1], reverse=True)
+        variDepSet = sorted(variDepSet, key=lambda x: x[1], reverse=True)
         # print(variDepSet)
         if variDepSet == []:
             break
         else:
             CMB.append(variDepSet[0][0])
             # print(CMB)
-
-
-
 
     """shrinking phase"""
     TestMB = CMB.copy()
@@ -52,12 +49,14 @@ def IAMBnPC(data, target, alaph, is_discrete=True):
         for y in range(p):
             if DAG[0, y] == 0:
                 continue
-            conditionAllSet = [i for i in range(p) if i != y and DAG[0,i] == 1]
+            conditionAllSet = [i for i in range(
+                p) if i != y and DAG[0, i] == 1]
             conditionSet = subsets(conditionAllSet, size)
             for S in conditionSet:
                 condtionVari = [TestMB[i] for i in S]
                 ci_number += 1
-                pval_sp, _ = cond_indep_test(data, target, TestMB[y], condtionVari, is_discrete)
+                pval_sp, _ = cond_indep_test(
+                    data, target, TestMB[y], condtionVari, is_discrete)
                 if pval_sp >= alaph:
                     DAG[0, y] = 0
                     # print("pDAG: \n" + str(DAG))
@@ -72,10 +71,9 @@ def IAMBnPC(data, target, alaph, is_discrete=True):
     # end while
 
     # print("DAG is: \n" + str(DAG))
-    MB = [TestMB[i] for i in range(p) if DAG[0,i] == 1 ]
+    MB = [TestMB[i] for i in range(p) if DAG[0, i] == 1]
 
     return MB, ci_number
-
 
 
 # data = pd.read_csv(

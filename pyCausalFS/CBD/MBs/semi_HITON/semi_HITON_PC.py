@@ -4,7 +4,7 @@ from CBD.MBs.common.condition_independence_test import cond_indep_test
 import numpy as np
 
 
-def semi_HITON_PC(data, target, alaph,is_disrete = True):
+def semi_HITON_PC(data, target, alaph, is_disrete=True):
     n, p = np.shape(data)
     ci_number = 0
     candidate_pc = []
@@ -14,13 +14,13 @@ def semi_HITON_PC(data, target, alaph,is_disrete = True):
     con = [i for i in range(p) if i != target]
     for x in con:
         ci_number += 1
-        pval, dep = cond_indep_test(data, target, x, [],is_disrete)
+        pval, dep = cond_indep_test(data, target, x, [], is_disrete)
         if pval <= alaph:
             S.append([x, dep])
 
     depset = sorted(S, key=lambda x: x[1], reverse=True)
     for i in range(len(depset)):
-        candidate_pc.append(depset[i][0])#RANK
+        candidate_pc.append(depset[i][0])  # RANK
 
     for x in candidate_pc:
         breakflag = False
@@ -35,7 +35,7 @@ def semi_HITON_PC(data, target, alaph,is_disrete = True):
             SS = subsets(conditions_set, j)
             for s in SS:
                 ci_number += 1
-                pval, _ = cond_indep_test(data, x, target, s,is_disrete)
+                pval, _ = cond_indep_test(data, x, target, s, is_disrete)
                 if pval > alaph:
                     sep[x] = [i for i in s]
                     current_pc.remove(x)
@@ -59,7 +59,7 @@ def semi_HITON_PC(data, target, alaph,is_disrete = True):
                 SS = subsets(con_set, j)
                 for s in SS:
                     ci_number += 1
-                    pval, _ = cond_indep_test(data, x, target, s,is_disrete)
+                    pval, _ = cond_indep_test(data, x, target, s, is_disrete)
                     if pval > alaph:
                         current_pc.remove(x)
                         sep[x] = [i for i in s]
@@ -67,7 +67,7 @@ def semi_HITON_PC(data, target, alaph,is_disrete = True):
                         break
                 if flag:
                     break
-    return list(set(current_pc)), sep,ci_number
+    return list(set(current_pc)), sep, ci_number
 
 
 # data = pd.read_csv("F:\cai_algorithm\data\Child_s500_v1.csv")

@@ -1,3 +1,0 @@
-[console_scripts]
-smop = smop.main:main
-

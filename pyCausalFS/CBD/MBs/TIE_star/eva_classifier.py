@@ -9,6 +9,7 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.metrics import accuracy_score
 import numpy as np
 
+
 def eva_classifier(data, target, MB):
     cum = 0
     number, kVar = np.shape(data)
@@ -28,4 +29,4 @@ def eva_classifier(data, target, MB):
     true_label = lable_all[t_size: number]
     acc_score = accuracy_score(true_label, Y_lable)
     # print("score is: " + str(acc_score))
-    return  acc_score
+    return acc_score

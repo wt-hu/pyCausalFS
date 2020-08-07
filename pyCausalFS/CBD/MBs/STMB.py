@@ -2,7 +2,7 @@
 # /usr/bin/env python
 """
 date: 2019/7/20 10:46
-desc: 
+desc:
 """
 
 import numpy as np
@@ -10,8 +10,9 @@ from CBD.MBs.common.condition_independence_test import cond_indep_test
 from CBD.MBs.common.subsets import subsets
 from CBD.MBs.IPCMB.RecognizePC import RecognizePC
 
+
 def STMB(data, target, alaph, is_discrete=True):
-    number,kVar = np.shape(data)
+    number, kVar = np.shape(data)
     ci_number = 0
     PCT = [i for i in range(kVar) if i != target]
     PCT, sepset, ci_num2 = RecognizePC(data, target, PCT, alaph, is_discrete)
@@ -24,12 +25,13 @@ def STMB(data, target, alaph, is_discrete=True):
         # print("y: " + str(y) + " ,X_set is:" + str(X_set))
         breakFlag = False
         for x in X_set:
-            conditionsSet = [str(i) for i in sepset[x]]
-            conditionsSet.append(str(y))
+            conditionsSet = [i for i in sepset[x]]
+            conditionsSet.append(y)
             conditionsSet = list(set(conditionsSet))
 
             ci_number += 1
-            pval_xt, dep_xt = cond_indep_test(data, target, x, conditionsSet, is_discrete)
+            pval_xt, dep_xt = cond_indep_test(
+                data, target, x, conditionsSet, is_discrete)
             # print("x is: " + str(x) + " conditionSet is: " + str(conditionsSet) + "pval_xt is: " + str(pval_xt))
             if pval_xt <= alaph:
                 Zset = [i for i in PCT]
@@ -43,11 +45,12 @@ def STMB(data, target, alaph, is_discrete=True):
                 else:
                     Zlength = len(Zset)
                 # Zlength +1 is important!
-                for j in range(Zlength+1):
+                for j in range(Zlength + 1):
                     Zsubsets = subsets(Zset, j)
                     for Z in Zsubsets:
                         ci_number += 1
-                        pval_yt, dep_yt = cond_indep_test(data, target, y, Z, is_discrete)
+                        pval_yt, dep_yt = cond_indep_test(
+                            data, target, y, Z, is_discrete)
                         if pval_yt > alaph:
                             # print("remove append is: " + str(y))
                             remove.append(y)
@@ -66,15 +69,16 @@ def STMB(data, target, alaph, is_discrete=True):
         if spouse[y] != []:
             spouseY_temp = spouse[y].copy()
             for x in spouseY_temp:
-                testSet = [i for i in range(kVar) if i in PCT or i in spouse[y]]
+                testSet = [
+                    i for i in range(kVar) if i in PCT or i in spouse[y]]
                 testSet = list(set(testSet))
                 # print("testSet has: " + str(testSet))
                 if x in testSet:
                     testSet.remove(x)
 
                 ci_number += 1
-                print("target is: ", target, " x is: " , x, "testSet is: ", testSet)
-                pval_xt_testset, _ = cond_indep_test(data, target, x, testSet, is_discrete)
+                pval_xt_testset, _ = cond_indep_test(
+                    data, target, x, testSet, is_discrete)
                 if pval_xt_testset > alaph:
                     # print("spouse[y] had: " + str(spouse[y]))
                     spouse[y].remove(x)
@@ -90,11 +94,12 @@ def STMB(data, target, alaph, is_discrete=True):
             conditionsVariSet.remove(x)
 
         ci_number += 1
-        pval_final, _ = cond_indep_test(data, target, x, conditionsVariSet, is_discrete)
+        pval_final, _ = cond_indep_test(
+            data, target, x, conditionsVariSet, is_discrete)
         if pval_final > alaph:
             PCT.remove(x)
 
-    spouse = [ i for j in range(len(spouse)) for i in spouse[j]]
+    spouse = [i for j in range(len(spouse)) for i in spouse[j]]
     MB = list(set(PCT).union(set(spouse)))
 
     return MB, ci_number
@@ -115,7 +120,7 @@ def STMB(data, target, alaph, is_discrete=True):
 # Recall is: 0.7789583333333334
 # time is: 11.730078125
 
-#5000
+# 5000
 
 # F1 is: 0.86
 # Precision is: 0.86

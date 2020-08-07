@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from LSL.MBs.common.real_P_C_S import real_p_c_s
 from LSL.MBs.PCDbyPCD import PCDbyPCD
-from LSL.MBs.MB_by_MB import MB_by_MB
+from LSL.MBs.MBbyMB import MBbyMB
 from LSL.MBs.CMB.CMB import CMB
 
 
@@ -36,7 +36,7 @@ def evaluation(method,
             if method == "PCDbyPCD":
                 P, c, undirected = PCDbyPCD(data, target, alaph, is_discrete)
             elif method == "MBbyMB":
-                P, c, undirected = MB_by_MB(data, target, alaph, is_discrete)
+                P, c, undirected = MBbyMB(data, target, alaph, is_discrete)
             elif method == "CMB":
                 P, c, undirected = CMB(data, target, alaph, is_discrete)
             else:

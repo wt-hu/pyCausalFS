@@ -2,13 +2,15 @@
 # /usr/bin/env python
 """
 date: 2019/7/21 9:42
-desc: 
+desc:
 """
 from CBD.MBs.common.condition_independence_test import cond_indep_test
 from CBD.MBs.common.subsets import subsets
 import numpy as np
+
+
 def RecognizePC(data, target, ADJT, alaph, is_discrete=True):
-    number,kVar = np.shape(data)
+    number, kVar = np.shape(data)
     NonPC = []
     cutSetSize = 0
     sepset = [[] for i in range(kVar)]
@@ -19,10 +21,11 @@ def RecognizePC(data, target, ADJT, alaph, is_discrete=True):
             SSubset = subsets(ADJT_X, cutSetSize)
             for S in SSubset:
                 ci_number += 1
-                pval_gp, dep_gp = cond_indep_test(data, target, x, S, is_discrete, True)
+                pval_gp, dep_gp = cond_indep_test(
+                    data, target, x, S, is_discrete)
                 if pval_gp > alaph:
                     NonPC.append(x)
-                    sepset[x] = [str(i) for i in S]
+                    sepset[x] = [i for i in S]
                     break
         if len(NonPC) > 0:
             ADJT = [i for i in ADJT if i not in NonPC]
@@ -42,5 +45,3 @@ def RecognizePC(data, target, ADJT, alaph, is_discrete=True):
 # MBs,sepset=RecognizePC(data,target,ADJT,alaph)
 # print("MBs is: "+str(MBs))
 # print(sepset)
-
-

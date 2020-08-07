@@ -47,7 +47,8 @@ def BAMB(data, target, alaph, is_discrete=True):
             for Z in ZSubsets:
                 ci_number += 1
                 convari = [i for i in Z]
-                pval_TAZ, dep_TAZ = cond_indep_test(data, target, A, convari, is_discrete)
+                pval_TAZ, dep_TAZ = cond_indep_test(
+                    data, target, A, convari, is_discrete)
                 if pval_TAZ > alaph:
                     sepset[A] = convari
                     breakFlag = True
@@ -75,7 +76,8 @@ def BAMB(data, target, alaph, is_discrete=True):
                     for Z in CSubsets:
                         ci_number += 1
                         convari = [i for i in Z]
-                        pval_TBZ, dep_TBZ = cond_indep_test(data, target, B, convari, is_discrete)
+                        pval_TBZ, dep_TBZ = cond_indep_test(
+                            data, target, B, convari, is_discrete)
                         # print("pval_TBZ: " + str(pval_TBZ))
                         if pval_TBZ >= alaph:
 
@@ -100,16 +102,16 @@ def BAMB(data, target, alaph, is_discrete=True):
             for C in range(kVar):
                 if C == target or C in CPC:
                     continue
-                conditionSet = [str(i) for i in sepset[C]]
-                conditionSet.append(str(A))
+                conditionSet = [i for i in sepset[C]]
+                conditionSet.append(A)
                 conditionSet = list(set(conditionSet))
 
                 ci_number += 1
-                pval_CAT, _ = cond_indep_test(data, target, C, conditionSet, is_discrete)
+                pval_CAT, _ = cond_indep_test(
+                    data, target, C, conditionSet, is_discrete)
                 if pval_CAT <= alaph:
                     CSPT[A].append(C)
                     pval_CSPT.append([C, pval_CAT])
-
 
             """step 2-1"""
 
@@ -139,7 +141,8 @@ def BAMB(data, target, alaph, is_discrete=True):
                         if A not in conditionvari:
                             conditionvari.append(A)
                         ci_number += 1
-                        pval_TXZ, _ = cond_indep_test(data, target, x, conditionvari, is_discrete)
+                        pval_TXZ, _ = cond_indep_test(
+                            data, target, x, conditionvari, is_discrete)
                         # print("x is: " + str(x) + "conditionvari: " + str(conditionvari) + " ,pval_TXZ is: " + str(pval_TXZ))
                         if pval_TXZ > alaph:
                             # print("spa is: " + str(SP[A]) + " .remove x is: " + str(x) + " ,Z is: " + str(conditionvari))
@@ -156,7 +159,7 @@ def BAMB(data, target, alaph, is_discrete=True):
 
             """step 2-2"""
             # remove x from pval_CSPT
-            pval_CSPT_new =[]
+            pval_CSPT_new = []
             plength = len(pval_CSPT)
             for i in range(plength):
                 if pval_CSPT[i][0] in SP[A]:
@@ -194,7 +197,8 @@ def BAMB(data, target, alaph, is_discrete=True):
                         for Z in ZaSubsets:
                             Z = [i for i in Z]
                             ci_number += 1
-                            pval_TXZ, _ = cond_indep_test(data, A, x, Z, is_discrete)
+                            pval_TXZ, _ = cond_indep_test(
+                                data, A, x, Z, is_discrete)
                             # print("Z is: " + str(Z) + " ,A is: " + str(A) + " ,x is: " + str(x) + " ,pval_txz is: " + str(pval_TXZ))
                             if pval_TXZ > alaph:
                                 # print("spa is:" + str(SP[A]) + " .remove x is: " + str(x) + " ,Z is: " + str(Z))
@@ -209,7 +213,7 @@ def BAMB(data, target, alaph, is_discrete=True):
                         break
 
             """ step 2-3"""
-            pval_CSPT_fin =[]
+            pval_CSPT_fin = []
             plength = len(pval_CSPT)
             for i in range(plength):
                 if pval_CSPT[i][0] in SP[A]:
@@ -249,7 +253,8 @@ def BAMB(data, target, alaph, is_discrete=True):
                             Z.append(A)
                             # print("Z in ZaSubsets is: " + str(Z))
                             ci_number += 1
-                            pval_TXZ, _ = cond_indep_test(data, target, x, Z, is_discrete)
+                            pval_TXZ, _ = cond_indep_test(
+                                data, target, x, Z, is_discrete)
                             # print("-Z is: " + str(Z) + " ,x is: " + str(x) + " ,pval_txz is: " + str(
                             #     pval_TXZ))
                             if pval_TXZ >= alaph:
@@ -285,11 +290,13 @@ def BAMB(data, target, alaph, is_discrete=True):
                 for j in range(Zlength + 1):
                     Zzsubsets = subsets(ZZALLsubsets, j)
                     for Z in Zzsubsets:
-                        conditionSet = [i for y in Z for i in CSPT[y] if i not in CPC]
+                        conditionSet = [
+                            i for y in Z for i in CSPT[y] if i not in CPC]
                         conditionSet = list(set(conditionSet).union(set(Z)))
                         # print("conditionSet: " + str(conditionSet))
                         ci_number += 1
-                        pval, _ = cond_indep_test(data, target, x, conditionSet, is_discrete)
+                        pval, _ = cond_indep_test(
+                            data, target, x, conditionSet, is_discrete)
                         if pval >= alaph:
                             # print("remove x is: " + str(x) + " , pval is: " + str(pval) + " ,conditionset is: " + str(conditionSet))
                             CPC.remove(x)

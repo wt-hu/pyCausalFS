@@ -2,18 +2,19 @@ from CBD.MBs.semi_HITON.semi_HITON_PC import semi_HITON_PC
 from CBD.MBs.common.condition_independence_test import cond_indep_test
 
 
-def semi_HITON_MB(data,target,alaph,is_discrete = True):
-    TPC,sep,ci_number = semi_HITON_PC(data, target, alaph)
+def semi_HITON_MB(data, target, alaph, is_discrete=True):
+    TPC, sep, ci_number = semi_HITON_PC(data, target, alaph)
     MB = TPC.copy()
     for x in TPC:
-        xPC,sepx,ci_number2 = semi_HITON_PC(data, x, alaph)
+        xPC, sepx, ci_number2 = semi_HITON_PC(data, x, alaph)
         ci_number += ci_number2
         for y in xPC:
             if y != target and y not in TPC:
-                condition_set = [str(i) for i in sep[y]]
-                condition_set = list(set(condition_set).union(set(str(x))))
+                condition_set = [i for i in sep[y]]
+                condition_set = list(set(condition_set).union(set([x])))
                 ci_number += 1
-                _, pval, _, _ = cond_indep_test(data, target, y, condition_set,is_discrete)
+                pval, _ = cond_indep_test(
+                    data, target, y, condition_set, is_discrete)
                 if pval <= alaph:
                     # print("append y is " + str(y))
                     MB.append(y)

@@ -21,18 +21,18 @@ def IAMB(data, target, alaph, attribute, is_discrete):
         circulate_Flag = False
         # tem_dep pre-set infinite negative.
         temp_dep = -(float)("inf")
-        y =None
-        variables=[i for i in attribute if i != target and i not in CMB]
+        y = None
+        variables = [i for i in attribute if i != target and i not in CMB]
 
         for x in variables:
             ci_number += 1
-            pival,dep = cond_indep_test(data, target, x, CMB, is_discrete)
+            pival, dep = cond_indep_test(data, target, x, CMB, is_discrete)
 
             # chose maxsize of f(X:T|CMB)
             if pival <= alaph:
                 if dep > temp_dep:
-                    temp_dep=dep
-                    y=x
+                    temp_dep = dep
+                    y = x
 
         # if not condition independence the node,appended to CMB
         if y is not None:
@@ -43,15 +43,17 @@ def IAMB(data, target, alaph, attribute, is_discrete):
     CMB_temp = CMB.copy()
     for x in CMB_temp:
         # exclude variable which need test p-value
-        condition_Variables=[i for i in CMB if i != x]
+        condition_Variables = [i for i in CMB if i != x]
         ci_number += 1
-        pval, dep = cond_indep_test(data,target, x, condition_Variables, is_discrete)
-        if pval > alaph :
+        pval, dep = cond_indep_test(
+            data, target, x, condition_Variables, is_discrete)
+        if pval > alaph:
             CMB.remove(x)
 
     return CMB, ci_number
 
 # Algorithm 2. PCSuperSet
+
 
 def PCSuperSet(data, target, alaph, is_discrete):
     ci_number = 0
@@ -65,7 +67,6 @@ def PCSuperSet(data, target, alaph, is_discrete):
         if pval > alaph:
             PCS.remove(x)
             d_sep.setdefault(x, [])
-
 
     PCS_temp = PCS.copy()
     for x in PCS_temp:
@@ -95,7 +96,8 @@ def SPSuperSet(data, target, PCS, d_sep, alaph, is_discrete):
             conditon_set.append(x)
             conditon_set = list(set(conditon_set))
             ci_number += 1
-            pval, _ = cond_indep_test(data, target, y, conditon_set, is_discrete)
+            pval, _ = cond_indep_test(
+                data, target, y, conditon_set, is_discrete)
             if pval <= alaph:
                 SPS_x.append(y)
 
@@ -128,7 +130,7 @@ def MBtoPC(data, target, alaph, attribute, is_discrete):
         c_length = len(condtion_sets_all)
         if c_length > max_k:
             c_length = max_k
-        for j in range( c_length+1):
+        for j in range(c_length + 1):
             condtion_sets = subsets(condtion_sets_all, j)
             for Z in condtion_sets:
                 ci_number += 1
@@ -155,20 +157,21 @@ def MBOR(data, target, alaph, is_discrete=True):
     ci_number += ci_num
     MBS = list(set(PCS).union(set(SPS)))
 
-    drop_data_attribute = [str(i) for i in range(kVar) if i != target and i not in MBS]
-    data_new = data.drop(drop_data_attribute, axis=1)
+    # drop_data_attribute = [str(i) for i in range(
+    #     kVar) if i != target and i not in MBS]
+    # data_new = data.drop(drop_data_attribute, axis=1)
     data_attribute = [i for i in range(kVar) if i == target or i in MBS]
 
-    PC, ci_num = MBtoPC(data_new, target, alaph, data_attribute, is_discrete)
+    PC, ci_num = MBtoPC(data, target, alaph, data_attribute, is_discrete)
     ci_number += ci_num
     PCS_rmPC = [i for i in PCS if i not in PC]
     for x in PCS_rmPC:
-        x_pcset, ci_num = MBtoPC(data_new, x, alaph, data_attribute, is_discrete)
+        x_pcset, ci_num = MBtoPC(
+            data, x, alaph, data_attribute, is_discrete)
 
         ci_number += ci_num
         if target in x_pcset:
             PC.append(x)
-
 
     SP = []
     for x in PC:
@@ -181,7 +184,7 @@ def MBOR(data, target, alaph, is_discrete=True):
             condition_all_set = [i for i in MBS if i != target and i != y]
             clength = len(condition_all_set)
             if clength > max_k:
-                 clength = max_k
+                clength = max_k
             for j in range(clength + 1):
                 condition_set = subsets(condition_all_set, j)
                 for Z in condition_set:
@@ -197,12 +200,12 @@ def MBOR(data, target, alaph, is_discrete=True):
                             condition_varis.append(x)
                             condition_varis = list(set(condition_varis))
                             ci_number += 1
-                            pval, _ = cond_indep_test(data, target, y, condition_varis, is_discrete)
+                            pval, _ = cond_indep_test(
+                                data, target, y, condition_varis, is_discrete)
                             if pval <= alaph:
                                 SP.append(y)
                 if break_flag:
                     break
-
 
     MB = list(set(PC).union(set(SP)))
     return MB, ci_number
@@ -229,7 +232,6 @@ def MBOR(data, target, alaph, is_discrete=True):
 # time is: 61.39
 
 
-
 # 5000
 #
 # F1 is: 0.97
@@ -238,4 +240,3 @@ def MBOR(data, target, alaph, is_discrete=True):
 # Distance is: 0.05
 # ci_number is: 765.37
 # time is: 371.77
-

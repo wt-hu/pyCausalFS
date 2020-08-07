@@ -2,7 +2,7 @@
 # /usr/bin/env python
 """
 date: 2019/7/17 15:23
-desc: 
+desc:
 """
 
 from CBD.MBs.PCMB.getPC import getPC
@@ -24,11 +24,12 @@ def PCMB(data, target, alaph, is_discrete=True):
         PCofPC = [i for i in PCofPC_temp if i != target and i not in MB]
         # print(" pc of pc is: " + str(PCofPC))
         for y in PCofPC:
-            conditionSet = [str(i) for i in sepset[y]]
-            conditionSet.append(str(x))
+            conditionSet = [i for i in sepset[y]]
+            conditionSet.append(x)
             conditionSet = list(set(conditionSet))
             ci_number += 1
-            pval, dep = cond_indep_test(data, target, y, conditionSet, is_discrete, True)
+            pval, dep = cond_indep_test(
+                data, target, y, conditionSet, is_discrete)
             if pval <= alaph:
                 MB.append(y)
                 break

@@ -31,7 +31,7 @@ def getMinDep(data, target, x, CPC, alpha, is_discrete):
             # this judge about target and x whether or not is condition independence ,if true,dep must be zero,
             # and end operating of function of getMinDep
             if pval > alpha:
-                return 0, S ,ci_number
+                return 0, S, ci_number
             if dep_min > dep:
                 dep_min = dep
     return dep_min, None, ci_number
@@ -59,7 +59,7 @@ def MMPC(data, target, alpha, is_discrete):
             # if x chose min dep is 0, it never append to CPC and should not test from now on,
             if x_dep_min == 0:
                 deoZeroSet.append(x)
-                sepset[x] = [str(j) for j in sepset_temp]
+                sepset[x] = [j for j in sepset_temp]
 
             elif x_dep_min > vari_all_dep_max:
                 vari_chose = x
@@ -86,7 +86,7 @@ def MMPC(data, target, alpha, is_discrete):
         if len(C_subsets) > max_k:
             C_length = max_k
         else:
-            C_length =len(C_subsets)
+            C_length = len(C_subsets)
 
         breakFlag = False
         for length in range(C_length+1):
@@ -115,3 +115,6 @@ def MMPC(data, target, alpha, is_discrete):
 # MBs,sepset=MMPC(data,target,alaph)
 # print(MBs)
 # print(sepset)
+
+
+

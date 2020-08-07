@@ -2,7 +2,7 @@
 # /usr/bin/env python
 """
 date: 2019/7/17 17:00
-desc: 
+desc:
 """
 from CBD.MBs.common.condition_independence_test import cond_indep_test
 from CBD.MBs.HITON.HITON_PC import HITON_PC
@@ -15,17 +15,18 @@ def HITON_MB(data, target, alaph, is_discrete=True):
     currentMB = PC.copy()
     for x in PC:
         # print("x is: " + str(x))
-        PCofPC, _,  ci_num2= HITON_PC(data, x, alaph, is_discrete)
+        PCofPC, _, ci_num2 = HITON_PC(data, x, alaph, is_discrete)
         ci_number += ci_num2
         # print("PCofPC is " + str(PCofPC))
         for y in PCofPC:
             # print("y is " + str(y))
             if y != target and y not in PC:
-                conditions_Set = [str(i) for i in sepset[y]]
-                conditions_Set.append(str(x))
+                conditions_Set = [i for i in sepset[y]]
+                conditions_Set.append(x)
                 conditions_Set = list(set(conditions_Set))
                 ci_number += 1
-                pval, dep = cond_indep_test(data, target, y, conditions_Set, is_discrete, True)
+                pval, dep = cond_indep_test(
+                    data, target, y, conditions_Set, is_discrete)
                 if pval <= alaph:
                     # print("append is: " + str(y))
                     currentMB.append(y)
