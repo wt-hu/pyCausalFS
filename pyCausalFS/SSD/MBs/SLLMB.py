@@ -71,7 +71,7 @@ def SLL(data,target):
 
 
 # import pandas as pd
-# data = pd.read_csv("C:/pythonProject/pyCausalFS/Alarm_data/Alarm1_s500_v1.csv")
+# data = pd.read_csv("C:/pythonProject/BN_PC_algorithm/Alarm_data/Alarm1_s500_v1.csv")
 # target = 5
 # res = SLL(data, target)
 # print("res is: " + str(res))

@@ -241,7 +241,7 @@ def hc(data, metric='AIC', max_iter=100, debug=False, restriction=None):
 
 # import pandas as pd
 #
-# df = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s5000_v2.csv")
+# df = pd.read_csv("C:/pythonProject/BN_PC_algorithm/data/child_s5000_v2.csv")
 # print(df)
 # data = np.array(df,dtype=np.int_)
 # data1 = data[:,0:10]

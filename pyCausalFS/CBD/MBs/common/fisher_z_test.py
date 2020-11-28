@@ -58,7 +58,7 @@ def cond_indep_fisher_z(data, var1, var2, cond=[], alpha=0.05):
     -------
 
     CI: int
-        The fisher z statistic for the test.
+        The  conditional independence of the fisher z test.
     r: float
         partial correlation coefficient
     p_value: float

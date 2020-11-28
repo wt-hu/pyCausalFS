@@ -20,7 +20,7 @@ def CMB(Data, T, alaph, is_discrete=True):
     already_calculated_MB = [1] * p
     all_MB = {}
     break_flag = False
-
+    num_ci = 0
     # Step 1:establish initial ID
     IDT = np.zeros((p, p))
 
@@ -33,8 +33,9 @@ def CMB(Data, T, alaph, is_discrete=True):
         else:
             Tmp.append(A)
         if already_calculated[A]:
-            IDT, all_idT3[A], all_idT3_count[A], pctemp = CMB_subroutine(
+            IDT, all_idT3[A], all_idT3_count[A], pctemp, n_c  = CMB_subroutine(
                 Data, A, alaph, IDT, already_calculated_MB, all_MB, is_discrete)
+            num_ci += n_c
             already_calculated[A] = 0
         IDT_A_3 = [index for index, i in enumerate(IDT[A]) if i == 3]
         IDT_A_2 = [index for index, i in enumerate(IDT[A]) if i == 2]
@@ -79,9 +80,10 @@ def CMB(Data, T, alaph, is_discrete=True):
             X = IDT3_count[z]
             Q.append(X)
             if already_calculated[X]:
-                IDT, all_idT3[X], all_idT3_count[X], pctemp = CMB_subroutine(
+                IDT, all_idT3[X], all_idT3_count[X], pctemp, n_c2 = CMB_subroutine(
                     Data, X, alaph, IDT, already_calculated_MB, all_MB, is_discrete)
                 already_calculated[X] = 0
+                num_ci += n_c2
             # update IDT according to IDX
             if IDT[X, A] == 2:
                 IDT[A, X] = 1
@@ -133,11 +135,11 @@ def CMB(Data, T, alaph, is_discrete=True):
         if break_flag:
             break
 
-    Parents = [i for i in range(p)if pdag[i, T] == -1]
-    Children = [j for j in range(p)if pdag[T, j] == -1]
-    Undirected = [i for i in range(p)if pdag[T, i] == 1]
-
-    return Parents, Children, Undirected
+    parents = [i for i in range(p)if pdag[i, T] == -1]
+    children = [j for j in range(p)if pdag[T, j] == -1]
+    undirected = [i for i in range(p)if pdag[T, i] == 1]
+    PC = list(set(parents).union(set(children)).union(set(undirected)))
+    return parents, children, PC, undirected, num_ci
 
 
 # import pandas as pd

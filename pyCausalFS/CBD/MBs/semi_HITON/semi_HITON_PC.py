@@ -45,28 +45,32 @@ def semi_HITON_PC(data, target, alaph, is_disrete=True):
                 break
 
     # backforward phase except the last add variable
-    Last_added = current_pc[-1]
+    Last_added = None
+    if len(current_pc) > 0:
+        Last_added = current_pc[-1]
+
     current_temp = current_pc.copy()
     for x in current_temp:
         flag = False
-        if x != Last_added:
-            con_set = [i for i in current_pc if i != x]
-            if len(con_set) >= 3:
-                leng = 3
-            else:
-                leng = len(con_set)
-            for j in range(leng + 1):
-                SS = subsets(con_set, j)
-                for s in SS:
-                    ci_number += 1
-                    pval, _ = cond_indep_test(data, x, target, s, is_disrete)
-                    if pval > alaph:
-                        current_pc.remove(x)
-                        sep[x] = [i for i in s]
-                        flag = True
-                        break
-                if flag:
+        if x == Last_added:
+            continue
+        con_set = [i for i in current_pc if i != x]
+        if len(con_set) >= 3:
+            leng = 3
+        else:
+            leng = len(con_set)
+        for j in range(leng + 1):
+            SS = subsets(con_set, j)
+            for s in SS:
+                ci_number += 1
+                pval, _ = cond_indep_test(data, x, target, s, is_disrete)
+                if pval > alaph:
+                    current_pc.remove(x)
+                    sep[x] = [i for i in s]
+                    flag = True
                     break
+            if flag:
+                break
     return list(set(current_pc)), sep, ci_number
 
 

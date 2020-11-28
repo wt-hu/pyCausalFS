@@ -19,7 +19,7 @@ network structure learning algorithm."
 
 """
 
-import numpy as np
+
 def mmpc(data, alpha=0.05):
 	"""
 	Max-Min Parents and Children Algorithm

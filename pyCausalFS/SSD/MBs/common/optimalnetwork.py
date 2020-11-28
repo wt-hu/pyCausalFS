@@ -6,7 +6,7 @@
  """
 
 import numpy as np
-import pyBN.learning.structure.score.hill_climbing as hill_climbing
+import SSD.MBs.pyBN.learning.structure.score.hill_climbing as hill_climbing
 def optimal_network(Z, data):
     Z = sorted(Z)
     _, kVar = np.shape(data)

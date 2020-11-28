@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def realMB(k):
     graph = np.zeros((k, k))
     i = 0
@@ -38,7 +39,3 @@ def realMB(k):
         MB[i] = list(set(PC[i]).union(set(Spouses[i])))
 
     return MB, PC
-
-# mb, pc = realMB(37)
-# for target in range(37):
-#     print(pc[target])

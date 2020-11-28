@@ -35,6 +35,19 @@ def HITON_MB(data, target, alaph, is_discrete=True):
     return list(set(currentMB)), ci_number
 
 
+# alpha = 0.01
+# start_time = time.process_time()
+# for target in range(kvar):
+#     print("target:", target)
+#     MBs, ci_number = HITON_MB(data, target, alpha, True)
+#     print("ci_number : ", ci_number)
+#     # print(dic["cache"][0], "-", dic["cache"][1],
+#     #   "-", (dic["cache"][0] + dic["cache"][1]))
+#     # print(dic["cache"][0] / (dic["cache"][0] + dic["cache"][1]))
+#
+# end_time = time.process_time()
+# print("run time = ", end_time - start_time)
+
 # data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s500_v1.csv")
 # print("the file read")
 #
@@ -43,20 +56,3 @@ def HITON_MB(data, target, alaph, is_discrete=True):
 #
 # MBs=HITON_MB(data,target,alaph)
 # print("MBs is: "+str(MBs))
-
-
-# 500
-
-# F1 is: 0.8465906593406597
-# Precision is: 0.8957857142857146
-# Recall is: 0.85525
-# time is: 27.555
-
-
-# 5000
-
-# F1 is: 0.98
-# Recall is: 0.99
-# Distance is: 0.03
-# ci_number is: 1017.85
-# time is: 96.69

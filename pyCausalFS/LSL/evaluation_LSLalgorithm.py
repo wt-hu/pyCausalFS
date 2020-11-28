@@ -29,16 +29,16 @@ def evaluation(method,
     for m in range(filenumber):
         completePath = path + str(m + 1) + ".csv"
         data = pd.read_csv(completePath)
-        get_p, get_c, get_un = [[]] * length_target_list, [[]] * \
+        get_p, get_c, undirected = [[]] * length_target_list, [[]] * \
             length_target_list, [[]] * length_target_list
         print(get_p)
         for i, target in enumerate(target_list):
             if method == "PCDbyPCD":
-                P, c, undirected = PCDbyPCD(data, target, alaph, is_discrete)
+                P, c, undirected[i] = PCDbyPCD(data, target, alaph, is_discrete)
             elif method == "MBbyMB":
-                P, c, undirected = MBbyMB(data, target, alaph, is_discrete)
+                P, c, undirected[i] = MBbyMB(data, target, alaph, is_discrete)
             elif method == "CMB":
-                P, c, undirected = CMB(data, target, alaph, is_discrete)
+                P, c, undirected[i] = CMB(data, target, alaph, is_discrete)
             else:
                 raise Exception("method input error!")
             get_p[i] = P
@@ -50,6 +50,7 @@ def evaluation(method,
                 set(get_c[n]))).union(set(real_c[target]).intersection(set(get_p[n]))))
             num_re += len(reverse_direction)
 
+            print(undirected)
             undirected_direction = list(undirected[n])
             num_undirect += len(undirected_direction)
 

@@ -16,7 +16,7 @@ def CausalSearch(
         idT4,
         idT4_count,
         is_discrete):
-
+    num_ci = 0
     # step 1:Single PC
     if len(PCT) == 1:
         IDT[T, PCT[0]] = 3
@@ -31,10 +31,12 @@ def CausalSearch(
                     continue
                 # print("X is: ",x," y is: ",y," Z is: ", Z)
                 pval, _ = cond_indep_test(Data, x, y, Z, is_discrete)
+                num_ci += 1
                 condition_vars = [i for i in Z]
                 condition_vars.append(T)
                 condition_vars = sorted(set(condition_vars))
                 pval2, _ = cond_indep_test(Data, x, y, condition_vars, is_discrete)
+                num_ci += 1
                 if pval > alaph and pval2 <= alaph:
                     IDT[T, x] = 1
                     IDT[T, y] = 1
@@ -70,4 +72,4 @@ def CausalSearch(
                 elif idT3[j][1] == x:
                     y = idT3[j][0]
                     IDT[T, y] = 2
-    return IDT, idT3, idT3_count, idT4, idT4_count
+    return IDT, idT3, idT3_count, idT4, idT4_count, num_ci

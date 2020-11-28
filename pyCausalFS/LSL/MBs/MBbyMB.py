@@ -15,7 +15,7 @@ import math
 
 def MBbyMB(data, target, alpha, is_discrete=True):
 
-    ci_test = 0
+    num_ci = 0
     max_k = 3
     _, kvar = np.shape(data)
     DAG = np.zeros((kvar, kvar))
@@ -42,7 +42,7 @@ def MBbyMB(data, target, alpha, is_discrete=True):
         # get MB(A)
         if mb_calcualted[A]:
             all_mb[A], ntest = MMMB(data, A, alpha, is_discrete)
-            ci_test += ntest
+            num_ci += ntest
             mb_calcualted[A] = False
 
         all_pc[A] = all_mb[A].copy()
@@ -63,7 +63,7 @@ def MBbyMB(data, target, alpha, is_discrete=True):
             while len(can_pc) >= cutSetSize and cutSetSize <= max_k:
                 SS = subsets(can_pc, cutSetSize)
                 for z in SS:
-                    ci_test += 1
+                    num_ci += 1
                     pval, _ = cond_indep_test(data, B, A, z, is_discrete)
 
                     if pval > alpha:
@@ -119,7 +119,7 @@ def MBbyMB(data, target, alpha, is_discrete=True):
     undirected = [i for i in range(kvar) if pdag[target, i] == 1]
     PC = list(set(parents).union(set(children)).union(set(undirected)))
 
-    return parents, children, PC, undirected
+    return parents, children, PC, undirected, num_ci
 
 
 # import warnings

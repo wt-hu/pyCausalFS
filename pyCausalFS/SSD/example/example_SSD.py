@@ -22,26 +22,12 @@ def example(method, data, list_target):
             file.write(str(target) + " PC: " + str(PC) + " , MB: " + str(MB)  + " .\n")
             print(str(target) + " PC: " + str(PC) + " , MB: " + str(MB))
         end_time = time.process_time()
-    if method == "SLL_PC":
-        start_time = time.process_time()
-        for target in list_target:
-            PC,_ = SLL(data, target)
-            file.write(str(target) + " PC: " + str(PC) + " .\n")
-            print(str(target) + " PC: " + str(PC))
-        end_time = time.process_time()
     elif method == "S2TMB":
         start_time = time.process_time()
         for target in list_target:
             PC, MB = S2TMB(data, target)
             file.write(str(target) + " PC: " + str(PC) + " , MB: " + str(MB) + ".\n")
             print(str(target) + " PC: " + str(PC) + " , MB: " + str(MB))
-        end_time = time.process_time()
-    elif method == "S2TMB_PC":
-        start_time = time.process_time()
-        for target in list_target:
-            PC, _ = S2TMB(data, target)
-            file.write(str(target) + " PC: " + str(PC) + ".\n")
-            print(str(target) + " PC: " + str(PC))
         end_time = time.process_time()
     elif method == "S2TMB_p":
         start_time = time.process_time()
@@ -63,7 +49,7 @@ if __name__ == '__main__':
 
     data_path = input("data: ")
     if data_path == "default":
-        data_path = "../data/Child_s500_v1.csv"
+        data_path = "../data/Child_s5000_v1.csv"
     data = pandas.read_csv(data_path)
 
     list_t = input("target variable index: ").split(",")

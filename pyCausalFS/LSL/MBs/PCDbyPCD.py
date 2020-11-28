@@ -6,7 +6,6 @@
  """
 
 import numpy as np
-np.set_printoptions(threshold=np.inf)
 from CBD.MBs.MMMB.MMPC import MMPC
 from LSL.MBs.common.Meek import Meek
 
@@ -24,7 +23,7 @@ def PCDbyPCD(data, target, alaph, is_discrete=True):
     children = []
     undirected = []
     lnum = 0
-
+    num_ci = 0
     while len(tmp) <= kVar and Q != []:
         A = Q[0]
         # print("A is: " + str(A))
@@ -36,7 +35,8 @@ def PCDbyPCD(data, target, alaph, is_discrete=True):
 
         #Get PC(A)
         if PCD_set_all[A] == []:
-            PCD_set_all[A], sepset_all[A], _ = MMPC(data, A, alaph, is_discrete)
+            PCD_set_all[A], sepset_all[A], n_c = MMPC(data, A, alaph, is_discrete)
+            num_ci += n_c
         for B in PCD_set_all[A]:
             # print("B is: " + str(B))
             Q.append(B)
@@ -106,12 +106,11 @@ def PCDbyPCD(data, target, alaph, is_discrete=True):
             children.append(i)
         if pDAG[target, i] == 1:
             undirected.append(i)
-
-    return parents, children, undirected
-
+    PC = list(set(parents).union(set(children)).union(set(undirected)))
+    return parents, children, PC, undirected, num_ci
 
 # import pandas as pd
-# data = pd.read_csv("D:/pyCausalFS/LSL/data/Child_s500_v1.csv")
+# data = pd.read_csv("D:/pyCausalFS/LSL/data/Child_s5000_v1.csv")
 # print("the file read")
 #
 # target = 1

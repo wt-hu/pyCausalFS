@@ -117,4 +117,22 @@ def MMPC(data, target, alpha, is_discrete):
 # print(sepset)
 
 
+# import warnings
+# warnings.filterwarnings('ignore')
+# import pandas as pd
+# data = pd.read_csv("C:/pythonProject/BN_PC_algorithm/CBD/data/child_s5000_v2.csv")
+# print("the file read")
+# import numpy as np
+# num1, kvar = np.shape(data)
+# alaph = 0.01
+#
+# import time
+# start_time = time.process_time()
+# for target in range(kvar):
+#     print("target is: ", target)
+#     PC,sepset,ntest = MMPC(data, target, alaph, True)
+#
+# end_time = time.process_time()
+#
+# print("time is: ", end_time - start_time)
 

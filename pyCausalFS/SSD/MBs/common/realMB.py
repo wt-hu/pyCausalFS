@@ -6,8 +6,9 @@ desc:
 """
 
 import numpy as np
-import pandas as pd
-def realMB(kVar):
+
+
+def realMB( kVar, path):
     graph = np.zeros((kVar,kVar))
     parents = [[] for i in range(kVar)]
     children = [[] for i in range(kVar)]
@@ -16,7 +17,7 @@ def realMB(kVar):
     spouses = [[] for i in range(kVar)]
 
     i = 0
-    with open("../data/child_graph.txt") as fileobject:
+    with open(path) as fileobject:
         for line in fileobject:
             a = line.split("  ")
             j = 0
@@ -29,7 +30,7 @@ def realMB(kVar):
         parents[m] = [i for i in range(kVar) if graph[i][m] == 1]
         children[m] = [ i for i in range(kVar) if graph[m][i] == 1]
 
-        PC[m] =list(set(parents[m]).union(set(children[m])))
+        PC[m] = list(set(parents[m]).union(set(children[m])))
 
     for m in range(kVar):
         for child in children[m]:
@@ -42,7 +43,3 @@ def realMB(kVar):
         MB[m] = list(set(PC[m]).union(set(spouses[m])))
 
     return MB, PC
-
-# MBs,PC = realMB(20)
-# print(MBs)
-# print(PC)

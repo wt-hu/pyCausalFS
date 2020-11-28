@@ -208,7 +208,7 @@ def tabu(data, k=5, metric='AIC', max_iter=100, debug=False, restriction=None):
 			break
 
 	
-	# bn = BayesNet(c_dict)
+	bn = BayesNet(c_dict)
 
 	return bn
 

@@ -19,25 +19,5 @@ def cond_indep_test(data, target, var, cond_set=[], is_discrete=True, alpha=0.01
         # else:
         # _, _, dep, pval = chi_square(target, var, cond_set, data, alpha)
     else:
-        _, _, pval = cond_indep_fisher_z(data, target, var, cond_set, alpha)
-        if pval >= alpha:
-            dep = - (1 - pval)
-        else:
-            dep = 1 - pval
-
+        CI, dep, pval = cond_indep_fisher_z(data, target, var, cond_set, alpha)
     return pval, dep
-
-def dict_cache_test(dict_cache,data, target, var, cond_set,*args,**kwargs):
-    na = sorted([target, var])
-    if len(cond_set):
-        na.extend(sorted(cond_set))
-    akey = "_".join('%s' % id for id in na)
-    # print("akey: ", akey)
-    if akey in dict_cache.keys():
-        pvalue, dep = dict_cache[akey]
-        print("cache get it!")
-        print("akey: ", akey)
-    else:
-        pvalue, dep = cond_indep_test(data, target, var, cond_set, *args, **kwargs)
-        dict_cache.setdefault(akey, [pvalue, dep])
-    return  dict_cache, pvalue, dep

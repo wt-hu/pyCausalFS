@@ -63,7 +63,7 @@ def S2TMB_p(data, target):
     return pc_t, MB
 
 # import pandas as pd
-# data = pd.read_csv("C:/pythonProject/pyCausalFS/data/child_s5000_v2.csv")
+# data = pd.read_csv("C:/pythonProject/BN_PC_algorithm/data/child_s5000_v2.csv")
 # target = 3
 # res = S2TMB_p(data, target)
 # print("res is: " + str(res))

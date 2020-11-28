@@ -17,6 +17,8 @@ import logging
 
 from scipy.stats import chi2
 import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
 
 _logger = logging.getLogger(__name__)
 
@@ -81,18 +83,14 @@ def g_square_dis(dm, x, y, s, alpha, levels):
     s_size = len(s)
     dof = ((levels[x] - 1) * (levels[y] - 1)
            * np.prod(list(map(lambda x: levels[x], s))))
-    row_size_required = 10 * dof
-    if row_size < row_size_required:
-        # _logger.warning('Not enough samples. %s is too small. Need %s.'
-        #                 % (str(row_size), str(row_size_required)))
-        p_val = 1
-        dep = 0
-        return p_val, dep
-        # if p_val >= alpha:
-        #     dep = (-2.0) - G2 / dof
-        # else:
-        #     dep = 2.0 + G2 / dof
 
+    # row_size_required = 5 * dof
+    # if row_size < row_size_required:
+    #     _logger.warning('Not enough samples. %s is too small. Need %s.'
+    #                     % (str(row_size), str(row_size_required)))
+    #     p_val = 1
+    #     dep = 0
+    #     return p_val, dep
 
     nijk = None
     if s_size < 5:
@@ -177,6 +175,7 @@ def g_square_dis(dm, x, y, s, alpha, levels):
         G2 = 0
     else:
         p_val = chi2.sf(G2, dof)
+        # print("p-value:", p_val)
     _logger.info('p_val = %s' % str(p_val))
 
     if p_val > alpha:
@@ -187,9 +186,9 @@ def g_square_dis(dm, x, y, s, alpha, levels):
 
 
 def g2_test_dis(data_matrix, x, y, s, alpha, **kwargs):
-    s1 = sorted(s.copy())
+    s1 = sorted([i for i in s])
     levels = []
-    data_matrix = np.array(data_matrix,dtype=int)
+    data_matrix = np.array(data_matrix, dtype=int)
     # print(data_matrix)
     # print("x: ", x, " ,y: ", y, " ,s: ", s1)
     if 'levels' in kwargs:

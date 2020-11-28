@@ -7,12 +7,7 @@ References
 network structure learning algorithm."
 
 """
-from pyBN.learning.structure.hybrid import mmpc
-from pyBN.learning.structure.score.hill_climbing import hc
-from pyBN.learning.structure.score.tabu import tabu
-from pyBN.learning.structure.score.random_restarts import hc_rr
-
-
+from pyBN.structure_learn.hybrid.mmpc import mmpc
 
 def mmhc(data, alpha=0.05, metric='AIC', max_iter=100, method='hc'):
 	"""
@@ -59,9 +54,9 @@ def mmhc(data, alpha=0.05, metric='AIC', max_iter=100, method='hc'):
 	if method == 'tabu':
 		bn = tabu(data=data, metric=metric, max_iter=max_iter, restriction=restriction)		
 	elif method == 'rr':
-		bn = hc_rr(data=data, metric=metric, max_iter=max_iter, restriction=restriction)
+		bn = hill_climbing_rr(data=data, metric=metric, max_iter=max_iter, restriction=restriction)
 	else:
-		bn = hc(data=data, metric=metric, max_iter=max_iter, restriction=restriction)
+		bn = hill_climbing(data=data, metric=metric, max_iter=max_iter, restriction=restriction)
 
 	return bn
 

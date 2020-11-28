@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     data_path = input("data: ")
     if data_path == "default":
-        data_path = "../data/Child_s500_v1.csv"
+        data_path = "../data/Child_s5000_v1.csv"
     data = pandas.read_csv(data_path)
 
     list_t = input("target variable index: ").split(",")

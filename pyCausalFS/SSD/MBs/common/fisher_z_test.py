@@ -8,10 +8,13 @@
 import numpy as np
 from scipy.stats import norm
 
+
+
 def get_partial_matrix(S, X, Y):
     S = S[X, :]
     S = S[:, Y]
     return S
+
 
 def partial_corr_coef(S, i, j, Y):
     S = np.matrix(S)
@@ -55,16 +58,18 @@ def cond_indep_fisher_z(data, var1, var2, cond=[], alpha=0.05):
     -------
 
     CI: int
-        The fisher z statistic for the test.
+        The  conditional independence of the fisher z test.
     r: float
         partial correlation coefficient
     p_value: float
         The p-value of the test
-
     """
 
     N, k_var = np.shape(data)
-    list_new = [var1, var2] + list(cond)
+    list_z = [var1, var2] + list(cond)
+    list_new = []
+    for a in list_z:
+        list_new.append(int(a))
     data_array = np.array(data)
     array_new = np.transpose(np.matrix(data_array[:, list_new]))
     cov_array = np.cov(array_new)
