@@ -27,13 +27,13 @@ The pyCausalFS library implements 30 representative causality-based feature sele
 
 	SLL-PC, S^2TMB-PC
 
-Furthermore, using the pyCausalFS library, users can easily generate different local structure learning methods and local-to-global structure learning methods, which includes 3 local BN structure learning algorithms and three local-to-global BN learning algorithm.
+Furthermore, using the pyCausalFS library, users can easily generate different local structure learning methods and local-to-global structure learning methods, which includes 3 local BN structure learning algorithms and three local-to-global BN learning algorithms.
 
 6）	local BN structure learning algorithms:
 
 	PCD-by-PCD, MB-by-MB, CMB
 
-7）	local-to-global BN learning algorithm:
+7）	local-to-global BN learning algorithms:
 
 	MMHC, GSBN, MBGSL
     
