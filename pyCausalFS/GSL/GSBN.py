@@ -5,11 +5,11 @@
  @File    : GSBN.py
  """
 import numpy as np
-from causal_cache.MBs.common.subsets import subsets
-from causal_cache.MBs.common.Meek import meek
-from causal_cache.MBs.common.condition_independence_test import dict_cache_test
+from CBD.MBs.common.subsets import subsets
+from CBD.MBs.common.Meek import meek
+from CBD.MBs.common.condition_independence_test import cond_indep_test
 
-def GSMB(data, target, alaph, is_discrete, dict_cache):
+def GSMB(data, target, alaph, is_discrete):
     number, kVar = np.shape(data)
     CMB = []
     ci_number = 0
@@ -22,7 +22,7 @@ def GSMB(data, target, alaph, is_discrete, dict_cache):
         circulateFlag = False
         for x in S_variables:
             ci_number += 1
-            pval_gp, dep_gp, dict_cache = dict_cache_test(data, target, x, CMB, is_discrete, dict_cache)
+            pval_gp, dep_gp = cond_indep_test(data, target, x, CMB, is_discrete)
             if pval_gp < alaph:
                 # print("CMB append is: "+str(x))
                 CMB.append(x)
@@ -39,14 +39,14 @@ def GSMB(data, target, alaph, is_discrete, dict_cache):
         for x in CMB_temp:
             subsets_CMB = [i for i in CMB if i != x]
             ci_number += 1
-            pval_sp, dep_sp, dict_cache = dict_cache_test(data, target, x, subsets_CMB, is_discrete, dict_cache)
+            pval_sp, dep_sp= cond_indep_test(data, target, x, subsets_CMB, is_discrete)
             if pval_sp > alaph :
                 # print("CMB remove is: "+ str(x))
                 CMB.remove(x)
                 circulateFlag = True
                 break
 
-    return list(set(CMB)), ci_number, dict_cache
+    return list(set(CMB)), ci_number
 
 
 def GSBN(data, alpha, is_discrete):
@@ -62,13 +62,9 @@ def GSBN(data, alpha, is_discrete):
     dict_cache.setdefault("cache", [0, 0])
 
     for i in range(kvar):
-        MB, _, dict_cache = GSMB(data, i, alpha, is_discrete, dict_cache)
-        print("MB[", i, "]: ",MB)
+        MB, _ = GSMB(data, i, alpha, is_discrete)
         for j in MB:
             DAG[i, j] = 1
-    print("1")
-
-    print("-----: ", dict_cache["cache"][0] / (dict_cache["cache"][0] + dict_cache["cache"][1]))
 
     # # AND Rule
     # for i in range(kvar):
@@ -99,7 +95,7 @@ def GSBN(data, alpha, is_discrete):
             while len(varis) > k and k <= max_k:
                 ss = subsets(varis, k)
                 for s in ss:
-                    pval, _, dict_cache = dict_cache_test(data, x, y, s, is_discrete, dict_cache)
+                    pval, _ = cond_indep_test(data, x, y, s, is_discrete)
                     if pval > alpha:
                         DAG[x, y] = 0
                         DAG[x, y] = 0
@@ -137,7 +133,7 @@ def GSBN(data, alpha, is_discrete):
                         con_set = [i for i in s]
                         con_set.append(x)
                         con_set = list(set(con_set))
-                        pval, _, dict_cache = dict_cache_test(data, y, z, con_set, is_discrete, dict_cache)
+                        pval, _ = cond_indep_test(data, y, z, con_set, is_discrete)
                         if pval > alpha:
                             PP[y, x] = 1
                             break_flag = True
@@ -158,7 +154,7 @@ def GSBN(data, alpha, is_discrete):
     # Remove Cycles
     [DAG, pdag, G] = meek(DAG, pdag, G, kvar)
 
-    return pdag, dict_cache
+    return pdag
 
 
 

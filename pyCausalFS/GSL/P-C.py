@@ -8,15 +8,15 @@
 
 import time
 import numpy as np
-from causal_cache.MBs.common.subsets import subsets
-from causal_cache.MBs.common.condition_independence_test import dict_cache_test
-
+from CBD.MBs.common.subsets import subsets
+from CBD.MBs.common.Meek import meek
+from CBD.MBs.common.condition_independence_test import cond_indep_test
 # The output P is an adjacency matrix, in which
 # P(i,j) = -1 if there is an i->j edge.
 # P(i,j) = P(j,i) = 1 if there is an undirected edge i <-> j
 
 
-def pc(Data, alpha, dict_cache):
+def pc(Data, alpha):
     time_start = time.time()
 
 
@@ -48,8 +48,8 @@ def pc(Data, alpha, dict_cache):
                         #xyz_data = Data[:, sub_data_script]  # (X, target, subset)
                         #pval = mi_test(xyz_data)  # use MI to test conditional independence
                         # _, pval, _, _ = chi_square_test(Data, x, y, list(map(int, S)))
-                        pval, _, dict_cache = dict_cache_test(
-                            Data, x, y, list(map(int, S)), True, dict_cache)
+                        pval, _ = cond_indep_test(
+                            Data, x, y, list(map(int, S)), True)
                         ind_test = ind_test + 1
                         if pval > alpha:
                             DAG[x, y] = 0
@@ -123,7 +123,7 @@ def pc(Data, alpha, dict_cache):
     time_end = time.time()
     time_cost = time_end - time_start
     print('running time is:', time_cost, 's')
-    return pDAG, ind_test, dict_cache
+    return pDAG, ind_test
 
 
 
